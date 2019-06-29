@@ -45,6 +45,8 @@ To use, `cd` to the `cpp-projects` folder and then:
 
 To add a template, simply create a folder in the templates/ directory, inside including all the files you need for that template.
 
+You must provide a CMakeLists file, where the project name is <PNAME>, which this program will auto replace with the name chosen on project create.
+
 #### Example usage
 
 ```bash
