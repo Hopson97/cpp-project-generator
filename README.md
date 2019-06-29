@@ -41,6 +41,10 @@ To use, `cd` to the `cpp-projects` folder and then:
 * Project type: The project template to use, eg terminal
 * Project name: The name of the project to create, eg my-app
 
+### Adding new templates
+
+To add a template, simply create a folder in the templates/ directory, inside including all the files you need for that template.
+
 #### Example usage
 
 ```bash
