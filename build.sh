@@ -18,5 +18,4 @@ else
     echo ""
     mv new ../../../../new
     cd ../../../../
-    ./new sfml sickproject
 fi
