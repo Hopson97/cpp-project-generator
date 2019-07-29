@@ -1,16 +1,18 @@
 sh build.sh
 
-./bin/debug/new terminal terminal
-./bin/debug/new sfml sfml
+test_template() {
+    ./bin/debug/new $1 test
+    echo "\n\n==========================================="
+    echo "Testing the $1 template build"
+    echo "-----------------------------------"
+    cd $1/test
+    sh scripts/build.sh 
+    echo "===========================================\n\n"
+    cd ../..
+}
 
-rm -rf -d test-projects
-mkdir test-projects
-
-mv terminal/terminal test-projects/terminal
-mv sfml/sfml test-projects/sfml
+test_template terminal
+test_template sfml
 
 rm -rf -d terminal
 rm -rf -d sfml
-
-#konsole --workdir test-projects/sfml
-konsole --workdir test-projects/terminal
