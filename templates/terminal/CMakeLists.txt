@@ -1,22 +1,53 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.10)
 
-project(<PNAME>)
-#Set up the C++ flags
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_LIBRARIES -lstdc++fs
+#Set up project
+project(<PNAME> VERSION 1.0)
 
-if(MSVC)
-    add_compile_options(/W4 /WX)
-else()
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
-endif()
-
-
+#Set executable
 set(SOURCES
-	src/main.cpp
+    src/main.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+#Set C++17
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
+
+#Set flags
+if(MSVC)
+  	target_compile_options(${PROJECT_NAME} PRIVATE 
+    	/W4 /WX)
+else()
+  	target_compile_options(${PROJECT_NAME} PRIVATE 
+		-Wall -Wextra -pedantic -Werror)		#Warning flags
+endif()
+
+#Find libraries
 find_package(Threads)
+
+#Finally
 target_link_libraries(${PROJECT_NAME} Threads::Threads)
+
+#				
+##Set up the C++ flags
+#set(CMAKE_CXX_STANDARD 17)
+#set(CMAKE_CXX_STANDARD_LIBRARIES -lstdc++fs)
+#
+#
+#
+#if(MSVC)
+#    add_compile_options(/W4 /WX)
+#else()
+#    add_compile_options(-Wall -Wextra -pedantic -Werror)
+#endif()
+#
+#
+#set(SOURCES
+#    src/main.cpp
+#)
+#
+#add_executable(${PROJECT_NAME} ${SOURCES})
+#
+#find_package(Threads)
+#target_link_libraries(${PROJECT_NAME} Threads::Threads)
