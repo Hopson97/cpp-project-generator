@@ -1,2 +1,7 @@
-/.vscode
-/bin
+.vscode/
+
+bin/
+
+test-projects/
+terminal/
+sfml/
