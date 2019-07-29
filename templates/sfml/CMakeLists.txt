@@ -1,26 +1,9 @@
-cmake_minimum_required(VERSION 3.1...3.15)
-
-if(${CMAKE_VERSION} VERSION_LESS 3.12)
-    cmake_policy(VERSION ${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION})
-else()
-    cmake_policy(VERSION 3.15)
-endif()
+cmake_minimum_required(VERSION 3.10)
 
 #Set up project
-project(<PNAME> VERSION 1.0
-				LANGUAGES CXX)
-				
-#Set up the C++ flags
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_LIBRARIES -lstdc++fs)
+project(<PNAME> VERSION 1.0)
 
-if(MSVC)
-    add_compile_options(/W4 /WX)
-else()
-    add_compile_options(-Wall -Wextra -pedantic -Werror)
-endif()
-
-
+#Set executable
 set(SOURCES
     src/main.cpp
     src/input/keyboard.cpp
@@ -28,5 +11,29 @@ set(SOURCES
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
+#Set C++17
+target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
+
+#Set flags
+if(MSVC)
+  	target_compile_options(${PROJECT_NAME} PRIVATE 
+    	/W4 /WX)
+else()
+  	target_compile_options(${PROJECT_NAME} PRIVATE 
+		-Wall -Wextra -pedantic -Werror)		#Warning flags
+endif()
+
+#Set module path
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
+
+#Find libraries
 find_package(Threads)
-target_link_libraries(${PROJECT_NAME} Threads::Threads)
+find_package(SFML REQUIRED audio network graphics window system)
+
+#Finally
+target_link_libraries(${PROJECT_NAME} 
+    Threads::Threads 
+    ${SFML_LIBRARIES} 
+    ${SFML_DEPENDENCIES}
+)
