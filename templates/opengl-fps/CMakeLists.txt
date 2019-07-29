@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 #Set up project
-project(testproj VERSION 1.0)
+project(<PNAME> VERSION 1.0)
 
 #Set executable
 set(SOURCES
