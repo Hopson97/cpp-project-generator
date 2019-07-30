@@ -117,11 +117,7 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-    //Create project
-    auto runScript = replaceProjectName("templates/run.sh");
-    auto debugScript = replaceProjectName("templates/debug.sh");
-    auto build = replaceProjectName("templates/build.sh");
-    auto cmake     = replaceProjectName("templates/" + projectType + "/CMakeLists.txt");
+
 
     fs::path projectPath = "./" + projectType + "/" + projectName + "/";
 
@@ -133,11 +129,19 @@ int main(int argc, char** argv) {
         std::ofstream out(fName);
         out << str;
     };
+    
+        //Create project
+    auto runScript = replaceProjectName("templates/run.sh");
+    auto debugScript = replaceProjectName("templates/debug.sh");
+    auto build = replaceProjectName("templates/build.sh");
+    auto cmake     = replaceProjectName("templates/" + projectType + "/CMakeLists.txt");
+    auto readme = replaceProjectName("templates/" + projectType + "/README.md");
 
     writeString(projectPath / fs::path("scripts/run.sh"), runScript);
     writeString(projectPath / fs::path("scripts/debug.sh"), debugScript);
     writeString(projectPath / fs::path("scripts/build.sh"), build);
     writeString(projectPath / fs::path("CMakeLists.txt"), cmake);
+    writeString(projectPath / fs::path("README.md"), readme);
     
 
     return EXIT_SUCCESS;

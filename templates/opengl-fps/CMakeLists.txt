@@ -43,4 +43,3 @@ target_link_libraries(${PROJECT_NAME}
     ${SFML_DEPENDENCIES}
     ${CMAKE_DL_LIBS}
 )
-+
