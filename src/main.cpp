@@ -133,10 +133,12 @@ int main(int argc, char** argv) {
         //Create project
     auto runScript = replaceProjectName("templates/run.sh");
     auto debugScript = replaceProjectName("templates/debug.sh");
+    auto deployScript = replaceProjectName("templates/deploy.sh");
     auto build = replaceProjectName("templates/build.sh");
     auto cmake     = replaceProjectName("templates/" + projectType + "/CMakeLists.txt");
     auto readme = replaceProjectName("templates/" + projectType + "/README.md");
 
+    writeString(projectPath / fs::path("scripts/deploy.sh"), deployScript);
     writeString(projectPath / fs::path("scripts/run.sh"), runScript);
     writeString(projectPath / fs::path("scripts/debug.sh"), debugScript);
     writeString(projectPath / fs::path("scripts/build.sh"), build);
