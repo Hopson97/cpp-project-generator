@@ -2,12 +2,15 @@
 #include <vector>
 #include <SFML/Graphics.hpp>
 
-#include "deps/glad.h"
+
 #include "input/keyboard.h"
 
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
+#include <glad/glad.h>
+//#include "../deps/glad.h"
 
 #include <stdexcept>
 #include <fstream>

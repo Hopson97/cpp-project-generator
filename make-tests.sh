@@ -15,8 +15,8 @@ test_template() {
     cd ../..
 }
 
-test_template terminal
-test_template sfml
+#test_template terminal
+#test_template sfml
 test_template opengl-fps
 
 if [ "$1" = "delete" ]
