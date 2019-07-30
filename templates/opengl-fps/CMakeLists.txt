@@ -21,16 +21,14 @@ if(MSVC)
     	/W4 /WX)
 else()
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-		-Wall -Wextra -pedantic)		#Warning flags
+		-Wall -Wextra -Werror -pedantic)		#Warning flags
 endif()
 
 #Set module path
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
-#Glad
-set(GLAD_PATH ${CMAKE_SOURCE_DIR}/deps/glad)
-add_library(glad ${GLAD_PATH}/glad.c)
-target_include_directories(${PROJECT_NAME} PRIVATE deps)
+#Subdirectories
+add_subdirectory(deps)
 
 #Find libraries
 find_package(Threads)
@@ -45,3 +43,4 @@ target_link_libraries(${PROJECT_NAME}
     ${SFML_DEPENDENCIES}
     ${CMAKE_DL_LIBS}
 )
++
