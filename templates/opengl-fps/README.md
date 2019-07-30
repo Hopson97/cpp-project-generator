@@ -22,7 +22,6 @@ https://github.com/g-truc/glm/tags
 
 ### Linux
 
-
 The project requires you have installed SFML and GLM. These can be installed from your project manager. For example, on Debian/ Ubuntu:
 
 ```sh
