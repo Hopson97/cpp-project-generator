@@ -130,21 +130,14 @@ int main(int argc, char** argv) {
         out << str;
     };
     
-        //Create project
-    auto runScript = replaceProjectName("templates/run.sh");
-    auto debugScript = replaceProjectName("templates/debug.sh");
-    auto deployScript = replaceProjectName("templates/deploy.sh");
-    auto build = replaceProjectName("templates/build.sh");
-    auto cmake     = replaceProjectName("templates/" + projectType + "/CMakeLists.txt");
-    auto readme = replaceProjectName("templates/" + projectType + "/README.md");
-
-    writeString(projectPath / fs::path("scripts/deploy.sh"), deployScript);
-    writeString(projectPath / fs::path("scripts/run.sh"), runScript);
-    writeString(projectPath / fs::path("scripts/debug.sh"), debugScript);
-    writeString(projectPath / fs::path("scripts/build.sh"), build);
-    writeString(projectPath / fs::path("CMakeLists.txt"), cmake);
-    writeString(projectPath / fs::path("README.md"), readme);
-    
-
+    //Create project files
+    using p = fs::path;
+    writeString(projectPath / p("scripts/deploy.sh"),    replaceProjectName("templates/deploy.sh"));
+    writeString(projectPath / p("scripts/run.sh"),       replaceProjectName("templates/run.sh"));
+    writeString(projectPath / p("scripts/debug.sh"),     replaceProjectName("templates/debug.sh"));
+    writeString(projectPath / p("scripts/build.sh"),     replaceProjectName("templates/build.sh"));
+    writeString(projectPath / p("CMakeLists.txt"),       replaceProjectName("templates/" + projectType + "/CMakeLists.txt"));
+    writeString(projectPath / p("README.md"),            replaceProjectName("templates/" + projectType + "/README.md"));
+    writeString(projectPath / p(".gitignore"),           replaceProjectName("templates/" + projectType + "/.gitignore"));
     return EXIT_SUCCESS;
 }
