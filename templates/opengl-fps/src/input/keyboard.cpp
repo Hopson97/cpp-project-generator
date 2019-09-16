@@ -28,3 +28,7 @@ bool Keyboard::isKeyDown(sf::Keyboard::Key key) const {
 bool Keyboard::keyReleased(sf::Keyboard::Key key) const {
 	return m_recentlyReleased == key;
 }
+
+void Keyboard::resetKeys() {
+    std::fill(m_keys.begin(), m_keys.end(), false);
+}

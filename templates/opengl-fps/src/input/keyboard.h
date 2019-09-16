@@ -39,6 +39,12 @@ class Keyboard {
 		bool keyReleased(sf::Keyboard::Key key) const;
 
 	private:
+		/**
+		 * @brief Resets keys back to the "unpressed" state
+		 * 
+		 */
+		void resetKeys();
+
 		std::array<bool, sf::Keyboard::KeyCount> m_keys;
 		sf::Keyboard::Key m_recentlyReleased;
 };
