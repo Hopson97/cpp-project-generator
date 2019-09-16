@@ -1,3 +1,5 @@
+#!/bin/bash
+
 sh scripts/build.sh release 
 
 rm -rf -d <PNAME>
