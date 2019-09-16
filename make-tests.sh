@@ -1,8 +1,10 @@
 sh build.sh
 
-rm -rf -d terminal
-rm -rf -d sfml
-rm -rf -d opengl-fps
+delete_all() {
+    rm -rf -d terminal
+    rm -rf -d sfml
+    rm -rf -d opengl-fps
+}
 
 test_template() {
     ./bin/debug/new $1 testproj
@@ -14,6 +16,7 @@ test_template() {
     echo "===========================================\n\n"
     cd ../..
 }
+delete_all
 
 test_template terminal
 test_template sfml
@@ -21,7 +24,5 @@ test_template opengl-fps
 
 if [ "$1" = "delete" ]
 then
-    rm -rf -d terminal
-    rm -rf -d sfml
-    rm -rf -d opengl-fps
+    delete_all
 fi

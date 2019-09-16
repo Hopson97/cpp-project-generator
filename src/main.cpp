@@ -132,12 +132,13 @@ int main(int argc, char** argv) {
     
     //Create project files
     using p = fs::path;
-    writeString(projectPath / p("scripts/deploy.sh"),    replaceProjectName("templates/deploy.sh"));
-    writeString(projectPath / p("scripts/run.sh"),       replaceProjectName("templates/run.sh"));
-    writeString(projectPath / p("scripts/debug.sh"),     replaceProjectName("templates/debug.sh"));
-    writeString(projectPath / p("scripts/build.sh"),     replaceProjectName("templates/build.sh"));
-    writeString(projectPath / p("CMakeLists.txt"),       replaceProjectName("templates/" + projectType + "/CMakeLists.txt"));
-    writeString(projectPath / p("README.md"),            replaceProjectName("templates/" + projectType + "/README.md"));
-    writeString(projectPath / p(".gitignore"),           replaceProjectName("templates/" + projectType + "/.gitignore"));
+    writeString(projectPath / p("scripts/deploy.sh"),   replaceProjectName("templates/deploy.sh"));
+    writeString(projectPath / p("scripts/run.sh"),      replaceProjectName("templates/run.sh"));
+    writeString(projectPath / p("scripts/debug.sh"),    replaceProjectName("templates/debug.sh"));
+    writeString(projectPath / p("scripts/build.sh"),    replaceProjectName("templates/build.sh"));
+    writeString(projectPath / p(".clang-format"),       replaceProjectName("templates/.clang-format"));
+    writeString(projectPath / p("CMakeLists.txt"),      replaceProjectName("templates/" + projectType + "/CMakeLists.txt"));
+    writeString(projectPath / p("README.md"),           replaceProjectName("templates/" + projectType + "/README.md"));
+    writeString(projectPath / p(".gitignore"),          replaceProjectName("templates/" + projectType + "/.gitignore"));
     return EXIT_SUCCESS;
 }
