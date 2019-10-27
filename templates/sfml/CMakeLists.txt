@@ -4,12 +4,11 @@ cmake_minimum_required(VERSION 3.10)
 project(<PNAME> VERSION 1.0)
 
 #Set executable
-set(SOURCES
+add_executable(${PROJECT_NAME}     
     src/main.cpp
     src/input/keyboard.cpp
+    src/application.cpp
 )
-
-add_executable(${PROJECT_NAME} ${SOURCES})
 
 #Set C++17
 target_compile_features(${PROJECT_NAME} PUBLIC cxx_std_17)
