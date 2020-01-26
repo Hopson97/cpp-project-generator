@@ -51,7 +51,9 @@ void Drawable::draw(GLenum drawMode) const
 //
 VertexArray::VertexArray()
 {
+    std::cout << "VAO CREATED\n";
     glCheck(glGenVertexArrays(1, &m_handle));
+    std::cout << m_handle << std::endl;
 }
 
 VertexArray::~VertexArray()

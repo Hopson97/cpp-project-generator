@@ -5,6 +5,10 @@ IndentWidth: 4
 BreakBeforeBraces: Stroustrup
 FixNamespaceComments: true
 IndentCaseLabels: true
-NamespaceIndentation: All
+NamespaceIndentation: None
 
 BreakConstructorInitializersBeforeComma: true
+
+AllowShortFunctionsOnASingleLine: None
+
+ColumnLimit: 80

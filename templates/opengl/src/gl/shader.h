@@ -22,8 +22,8 @@ class Shader final {
     Shader() = default;
     ~Shader();
 
-    Shader(const Shader&) = delete;
-    Shader& operator=(const Shader&) = delete;
+    Shader(const Shader &) = delete;
+    Shader &operator=(const Shader &) = delete;
 
     Shader(Shader &&other);
     Shader &operator=(Shader &&other);

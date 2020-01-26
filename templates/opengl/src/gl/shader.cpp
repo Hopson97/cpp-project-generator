@@ -1,8 +1,8 @@
 #include "shader.h"
 #include "gl_errors.h"
-#include <stdexcept>
 #include <fstream>
 #include <sstream>
+#include <stdexcept>
 
 #include <iostream>
 
@@ -19,7 +19,6 @@ std::string loadFileContents(const std::string &path)
     stream << inFile.rdbuf();
     return stream.str();
 }
-
 
 GLuint compileShader(const GLchar *source, GLenum shaderType)
 {
