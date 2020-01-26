@@ -7,6 +7,10 @@ project(<PNAME> VERSION 1.0)
 set(SOURCES
     src/main.cpp
     src/input/keyboard.cpp
+    src/gl/primitive.cpp
+    src/gl/shader.cpp
+    src/gl/textures.cpp
+    src/gl/vertex_array.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
