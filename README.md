@@ -47,7 +47,7 @@ After building, your cpp-projects folder will have the following structure:
     |   ├── debug.sh
     |   ├── deploy.sh
     |   ├── run.sh
-    |   ├── opengl-fps
+    |   ├── opengl
     |   ├── sfml
     |   └── terminal
     └── terminal
