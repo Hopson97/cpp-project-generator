@@ -4,6 +4,7 @@
 #include <iostream>
 
 #include "gl/primitive.h"
+#include "maths.h"
 
 Application::Application(sf::Window &window)
     : m_window(window)
@@ -29,8 +30,10 @@ Application::Application(sf::Window &window)
 
     m_quad = makeQuadVertexArray(1.0f, 1.0f);
 
-    m_projectionMatrix =
+    m_projectionMatrix = 
         glm::perspective(3.14f / 2.0f, 1280.0f / 720.0f, 0.01f, 100.0f);
+
+    m_texture.create("logo");
 }
 
 void Application::run()
@@ -94,20 +97,16 @@ void Application::onInput()
     // Input
     const float SPEED = 0.05f;
     if (m_keyboard.isKeyDown(sf::Keyboard::W)) {
-        player.pos.x += -glm::cos(glm::radians(player.rot.y + 90)) * SPEED;
-        player.pos.z += -glm::sin(glm::radians(player.rot.y + 90)) * SPEED;
+        player.pos += forwardsVector(player.rot) * SPEED;
     }
     else if (m_keyboard.isKeyDown(sf::Keyboard::S)) {
-        player.pos.x += glm::cos(glm::radians(player.rot.y + 90)) * SPEED;
-        player.pos.z += glm::sin(glm::radians(player.rot.y + 90)) * SPEED;
+        player.pos += backwardsVector(player.rot) * SPEED;
     }
     if (m_keyboard.isKeyDown(sf::Keyboard::A)) {
-        player.pos.x += -glm::cos(glm::radians(player.rot.y)) * SPEED;
-        player.pos.z += -glm::sin(glm::radians(player.rot.y)) * SPEED;
+        player.pos += leftVector(player.rot) * SPEED;
     }
     else if (m_keyboard.isKeyDown(sf::Keyboard::D)) {
-        player.pos.x += glm::cos(glm::radians(player.rot.y)) * SPEED;
-        player.pos.z += glm::sin(glm::radians(player.rot.y)) * SPEED;
+        player.pos += rightVector(player.rot) * SPEED;
     }
 }
 
@@ -117,23 +116,18 @@ void Application::onUpdate()
 
 void Application::onRender()
 {
+    glm::mat4 projectionViewMatrix = createProjectionViewMatrix(player.pos, player.rot, m_projectionMatrix);
+
+    //Render the quad
     m_quadShader.program.bind();
-    glm::mat4 viewMatrix{1.0f};
-    viewMatrix = glm::rotate(viewMatrix, glm::radians(player.rot.x), {1, 0, 0});
-    viewMatrix = glm::rotate(viewMatrix, glm::radians(player.rot.y), {0, 1, 0});
-    viewMatrix = glm::rotate(viewMatrix, glm::radians(player.rot.z), {0, 0, 1});
-    viewMatrix = glm::translate(viewMatrix, -player.pos);
-
-    glm::mat4 projectionViewMatrix{1.0f};
-    projectionViewMatrix = m_projectionMatrix * viewMatrix;
-
     glm::mat4 modelMatrix{1.0f};
-    modelMatrix = glm::rotate(modelMatrix, 3.14f / 4.0f, {1.0, 0.0, 0.0});
+    rotateMatrix(modelMatrix, {45.0f, 0.0f, 0.0f});
 
     gl::loadUniform(m_quadShader.projViewLocation, projectionViewMatrix);
     gl::loadUniform(m_quadShader.modelLocation, modelMatrix);
 
     // Render
+    m_texture.bind();
     m_quad.bind();
     m_quad.getDrawable().bindAndDraw();
 }

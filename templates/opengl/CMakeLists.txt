@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.10)
 
 #Set up project
-project(<PNAME> VERSION 1.0)
+project(gltexttest VERSION 1.0)
 
 #Set executable
 set(SOURCES
@@ -13,6 +13,7 @@ set(SOURCES
     src/gl/textures.cpp
     src/gl/vertex_array.cpp
     src/gl/gl_errors.cpp
+    src/maths.cpp
 )
 
 add_executable(${PROJECT_NAME} ${SOURCES})
