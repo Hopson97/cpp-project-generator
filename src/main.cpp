@@ -54,12 +54,12 @@ bool verifyTemplateAndName() {
     }
 
     //Check if the template project workspace exists
-    if (!fs::exists("./" + projectType)) {
-        fs::create_directory(projectType);
-    }
+    //if (!fs::exists("./" + projectType)) {
+    //    fs::create_directory(projectType);
+    //}
 
     //Make sure the project name does not exist
-    for (auto& entry : fs::directory_iterator("./" + projectType + "/")) {
+    for (auto& entry : fs::directory_iterator("./")) {
         if (entry.path().filename() == projectName) {
             std::cout << "Project with name " << projectName << " already exists, unable to create project.";
             return false;
