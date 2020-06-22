@@ -16,17 +16,13 @@ sh build.sh release
 
 ### Setting up
 
-The project makes some assumptions about your C++ workspace structure.
-
-* You have a root folder for your projects
-* You have a folder for console/terminal apps to put the generator into
+The project makes some assumptions about your C++ workspace structure:
 
 For example, on my system, I have this:
 
 ```sh
 ├── cpp-projects
-    └── terminal
-        └── cpp-project-generator
+    └── cpp-project-generator
 ```
 
 My C++ projects are in the `cpp-projects` directory, and the project generator is in the `cpp-projects/terminal/cpp-project-generator` directory.
@@ -42,16 +38,16 @@ After building, your cpp-projects folder will have the following structure:
 ```sh
 └── cpp-projects
     ├── new
-    ├── templates
-    |   ├── build.sh
-    |   ├── debug.sh
-    |   ├── deploy.sh
-    |   ├── run.sh
-    |   ├── opengl
-    |   ├── sfml
-    |   └── terminal
-    └── terminal
-        └── cpp-project-generator
+    ├── cpp-project-generator
+    └── templates
+        ├── build.sh
+        ├── debug.sh
+        ├── deploy.sh
+        ├── run.sh
+        ├── opengl
+        ├── sfml
+        └── terminal
+
 ```
 
 This created the `new` executable, which can be used to create projects.
@@ -92,7 +88,7 @@ Rerun `sh build.sh release` to update the templates folder in the `cpp-projects`
 ./new terminal my-application
 ```
 
-This will create a project folder `cpp-projects/terminal/my-app/` with the structure
+This will create a project folder `cpp-projects//my-app/` with the structure
 
 ```sh
 └── my-app

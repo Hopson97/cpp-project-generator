@@ -117,9 +117,7 @@ int main(int argc, char** argv) {
         return 0;
     }
 
-
-
-    fs::path projectPath = "./" + projectType + "/" + projectName + "/";
+    fs::path projectPath = "./" + projectName + '/';// + projectType + "/" + projectName + "/";
 
     fs::copy("templates/" + projectType, projectPath, fs::copy_options::recursive);
     fs::create_directory(projectPath.string() + "scripts");

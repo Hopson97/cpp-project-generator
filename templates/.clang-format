@@ -3,12 +3,17 @@ BasedOnStyle: LLVM
 IndentWidth: 4
 
 BreakBeforeBraces: Stroustrup
+
 FixNamespaceComments: true
 IndentCaseLabels: true
-NamespaceIndentation: None
+NamespaceIndentation: All
 
 BreakConstructorInitializersBeforeComma: true
 
 AllowShortFunctionsOnASingleLine: None
 
-ColumnLimit: 80
+ColumnLimit: 90
+
+AlwaysBreakTemplateDeclarations: true
+
+PointerAlignment: Left
