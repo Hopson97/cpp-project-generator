@@ -3,7 +3,6 @@
 #include <cmath>
 #include <iostream>
 
-
 Application::Application()
     : m_window({WINDOW_WIDTH, WINDOW_HEIGHT}, "Collision Testing")
 {

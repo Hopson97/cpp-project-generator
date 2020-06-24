@@ -6,7 +6,7 @@
 #include "gl/primitive.h"
 #include "maths.h"
 
-Application::Application(sf::Window &window)
+Application::Application(sf::Window& window)
     : m_window(window)
 {
     sf::ContextSettings settings;
@@ -25,13 +25,11 @@ Application::Application(sf::Window &window)
     m_quadShader.program.bind();
     m_quadShader.projViewLocation =
         m_quadShader.program.getUniformLocation("projectionViewMatrix");
-    m_quadShader.modelLocation =
-        m_quadShader.program.getUniformLocation("modelMatrix");
+    m_quadShader.modelLocation = m_quadShader.program.getUniformLocation("modelMatrix");
 
     m_quad = makeQuadVertexArray(1.0f, 1.0f);
 
-    m_projectionMatrix = 
-        glm::perspective(3.14f / 2.0f, 1280.0f / 720.0f, 0.01f, 100.0f);
+    m_projectionMatrix = glm::perspective(3.14f / 2.0f, 1280.0f / 720.0f, 0.01f, 100.0f);
 
     m_texture.create("logo");
 }
@@ -116,9 +114,10 @@ void Application::onUpdate()
 
 void Application::onRender()
 {
-    glm::mat4 projectionViewMatrix = createProjectionViewMatrix(player.pos, player.rot, m_projectionMatrix);
+    glm::mat4 projectionViewMatrix =
+        createProjectionViewMatrix(player.pos, player.rot, m_projectionMatrix);
 
-    //Render the quad
+    // Render the quad
     m_quadShader.program.bind();
     glm::mat4 modelMatrix{1.0f};
     rotateMatrix(modelMatrix, {45.0f, 0.0f, 0.0f});

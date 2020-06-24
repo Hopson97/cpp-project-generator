@@ -6,8 +6,8 @@
 
 #include "gl/primitive.h"
 #include "gl/shader.h"
-#include "gl/vertex_array.h"
 #include "gl/textures.h"
+#include "gl/vertex_array.h"
 
 #include "input/keyboard.h"
 
@@ -21,7 +21,7 @@ constexpr float ACCELERATION_DAMP = 0.85f;
 
 class Application {
   public:
-    Application(sf::Window &window);
+    Application(sf::Window& window);
 
     void run();
 
@@ -31,7 +31,7 @@ class Application {
     void onUpdate();
     void onRender();
 
-    sf::Window &m_window;
+    sf::Window& m_window;
 
     struct {
         gl::Shader program;

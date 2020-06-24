@@ -4,9 +4,8 @@
 
 #include <array>
 
-glm::mat4 createProjectionViewMatrix(const glm::vec3 &position,
-                                     const glm::vec3 &rotation,
-                                     const glm::mat4 &projection);
+glm::mat4 createProjectionViewMatrix(const glm::vec3& position, const glm::vec3& rotation,
+                                     const glm::mat4& projection);
 
 /**
  * @brief Rotate a matrix
@@ -14,7 +13,7 @@ glm::mat4 createProjectionViewMatrix(const glm::vec3 &position,
  * @param matrix The matrix to rotate
  * @param degrees Rotation axis in degrees
  */
-void rotateMatrix(glm::mat4 &matrix, const glm::vec3 &degrees);
+void rotateMatrix(glm::mat4& matrix, const glm::vec3& degrees);
 
 /**
  * @brief Translates a matrix
@@ -22,7 +21,7 @@ void rotateMatrix(glm::mat4 &matrix, const glm::vec3 &degrees);
  * @param matrix The matrix to translate
  * @param offset The amount of translate by
  */
-void translateMatrix(glm::mat4 &matrix, const glm::vec3 &offset);
+void translateMatrix(glm::mat4& matrix, const glm::vec3& offset);
 
 /**
  * @brief Scales a matrix
@@ -30,7 +29,7 @@ void translateMatrix(glm::mat4 &matrix, const glm::vec3 &offset);
  * @param matrix The matrix to scale
  * @param scalars The amount to scale each axis by
  */
-void scaleMatrix(glm::mat4 &matrix, const glm::vec3 &scalars);
+void scaleMatrix(glm::mat4& matrix, const glm::vec3& scalars);
 
 /**
  * @brief Scales a matrix
@@ -38,7 +37,7 @@ void scaleMatrix(glm::mat4 &matrix, const glm::vec3 &scalars);
  * @param matrix The matrix to scale
  * @param scalar The amount to scale the whole matrix by
  */
-void scaleMatrix(glm::mat4 &matrix, float scalar);
+void scaleMatrix(glm::mat4& matrix, float scalar);
 
 /**
  * @brief Creates a forwards-facing vector
@@ -46,7 +45,7 @@ void scaleMatrix(glm::mat4 &matrix, float scalar);
  * @param rotation The rotation axis to base the result on
  * @return glm::vec3 A vector that is forwards from the rotation vector
  */
-glm::vec3 forwardsVector(const glm::vec3 &rotation);
+glm::vec3 forwardsVector(const glm::vec3& rotation);
 
 /**
  * @brief Creates a backwards-facing vector
@@ -54,7 +53,7 @@ glm::vec3 forwardsVector(const glm::vec3 &rotation);
  * @param rotation The rotation axis to base the result on
  * @return glm::vec3 A vector that is backwards from the rotation vector
  */
-glm::vec3 backwardsVector(const glm::vec3 &rotation);
+glm::vec3 backwardsVector(const glm::vec3& rotation);
 
 /**
  * @brief Creates a left-facing vector
@@ -62,7 +61,7 @@ glm::vec3 backwardsVector(const glm::vec3 &rotation);
  * @param rotation The rotation axis to base the result on
  * @return glm::vec3 A vector that is left from the rotation vector
  */
-glm::vec3 leftVector(const glm::vec3 &rotation);
+glm::vec3 leftVector(const glm::vec3& rotation);
 
 /**
  * @brief Creates a right-facing vector
@@ -70,4 +69,4 @@ glm::vec3 leftVector(const glm::vec3 &rotation);
  * @param rotation The rotation axis to base the result on
  * @return glm::vec3 A vector that is right from the rotation vector
  */
-glm::vec3 rightVector(const glm::vec3 &rotation);
+glm::vec3 rightVector(const glm::vec3& rotation);
