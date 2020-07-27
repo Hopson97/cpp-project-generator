@@ -6,8 +6,7 @@ project(<PNAME> VERSION 1.0)
 #Set executable
 add_executable(${PROJECT_NAME}     
     src/main.cpp
-    src/input/keyboard.cpp
-    src/application.cpp
+    src/keyboard.cpp
 )
 
 #Set C++17

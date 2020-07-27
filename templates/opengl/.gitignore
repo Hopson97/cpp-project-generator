@@ -1,3 +1,28 @@
-# Project binaries
+#
+# Linux
+#
 /bin
 <PNAME>
+
+#
+#   Windows
+#
+*.dll
+*.exe
+*.sln
+*.vcxproj
+*.filters
+*.user
+*.vs
+.vscode
+Debug/
+Release/
+
+#
+#   Misc
+#
+*.zip
+*.temp
+*.srctrlprj
+*.srctrldb
+*.srctrlbm
