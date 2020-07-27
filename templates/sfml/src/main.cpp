@@ -3,7 +3,7 @@
 
 int main()
 {
-    sf::RenderWindow window;
+    sf::RenderWindow window({1280, 720}, "SFML");
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
 

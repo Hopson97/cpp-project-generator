@@ -45,6 +45,7 @@ find_package(glm REQUIRED)
 #Finally
 target_link_libraries(${PROJECT_NAME} 
     glad
+    glm
     Threads::Threads 
     ${SFML_LIBRARIES} 
     ${SFML_DEPENDENCIES}
