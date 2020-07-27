@@ -21,36 +21,34 @@ The project makes some assumptions about your C++ workspace structure:
 For example, on my system, I have this:
 
 ```sh
-├── cpp-projects
+├── cpp
     └── cpp-project-generator
 ```
 
-My C++ projects are in the `cpp-projects` directory, and the project generator is in the `cpp-projects/terminal/cpp-project-generator` directory.
+My C++ projects are in the `cpp` directory, and the project generator is in the `cpp/cpp-project-generator` directory.
 
 To create the generator, `cd` into `cpp-project-generator` and run:
 
 ```bash
-sh build.sh release
+sh install.sh
 ```
 
 After building, your cpp-projects folder will have the following structure:
 
 ```sh
 └── cpp-projects
-    ├── new
+    ├── new.py
     ├── cpp-project-generator
     └── templates
-        ├── build.sh
-        ├── debug.sh
-        ├── deploy.sh
-        ├── run.sh
+        ├── _common
+        ├── _deps
         ├── opengl
         ├── sfml
         └── terminal
 
 ```
 
-This created the `new` executable, which can be used to create projects.
+This created added the `new.py` script, which can be used to create projects.
 
 It also created a `templates` directory. This is where scripts for your new projects will be copied from, as well as where the project template layouts are stored. For example, SFML projects use the layout from the templates/sfml folder, and then copy the scripts into a scripts folder. More info in text section.
 
@@ -59,20 +57,19 @@ The scripts:
 * `build.sh` - Used to build your projects. Use `build.sh release` to build in release mode.
 * `run.sh` - Used to run your projects. Use `run.sh release` to run in release mode.
 * `debug.sh` - Used to run GDB to debug your project.
-* `deploy.sh` - Used to create a directory with the project executable and the resources folder (if there is one)
 
 ### Using
 
-To use, `cd` to the `cpp-projects` folder and then:
+To use, `cd` to your `cpp` folder and then:
 
-`./new <Project type> <Project name>`
+`python3 new.py <Project type> <Project name>`
 
 * Project type: The project template to use, eg terminal or sfml. This can be any directory in the projects/ folder
 * Project name: The name of the project to create, eg my-app
 
 EG
 
-`./new terminal my-app`
+`python3 new.py terminal my-app`
 
 #### Adding new templates
 
@@ -80,15 +77,15 @@ To add a template, simply create a folder in the cpp-project-generator/templates
 
 You must provide a CMakeLists file, where the project name is <PNAME>, which this program will auto replace with the name chosen on project create.
 
-Rerun `sh build.sh release` to update the templates folder in the `cpp-projects` directory.
+Rerun `sh install.sh` to update the templates folder in the `cpp` directory.
 
 #### Example usage
 
 ```bash
-./new terminal my-application
+python3 new.py terminal my-app
 ```
 
-This will create a project folder `cpp-projects//my-app/` with the structure
+This will create a project folder `cpp/my-app/` with the structure
 
 ```sh
 └── my-app
@@ -96,7 +93,6 @@ This will create a project folder `cpp-projects//my-app/` with the structure
     ├── scripts
     │   ├── build.sh
     │   ├── debug.sh
-    |   ├── deploy.sh
     │   └── run.sh
     └── src
         └── main.cpp
@@ -125,7 +121,6 @@ After the build stage, it creates the following structure:
     ├── scripts
     │   ├── build.sh
     │   ├── debug.sh
-    |   ├── deploy.sh
     │   └── run.sh
     └── src
         └── main.cpp
