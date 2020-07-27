@@ -12,6 +12,9 @@ void Keyboard::update(sf::Event e)
             m_keys[e.key.code] = true;
             break;
 
+        case sf::Event::KeyReleased:
+            m_keys[e.key.code] = false;
+
         default:
             break;
     }
