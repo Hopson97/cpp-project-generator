@@ -4,13 +4,9 @@ cmake_minimum_required(VERSION 3.10)
 project(<PNAME> VERSION 1.0)
 
 #Set executable
-set(SOURCES
+add_executable(${PROJECT_NAME}     
     src/main.cpp
-)
-
-add_executable(
-	${PROJECT_NAME} 
-	src/main.cpp
+    src/keyboard.cpp
 )
 
 #Set C++17
@@ -23,17 +19,19 @@ if(MSVC)
     	/W4 /WX)
 else()
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-		-Wall -Wextra -pedantic)	
+		-Wall -Wextra -pedantic -Werror)		#Warning flags
 endif()
+
+#Set module path
+set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 #Find libraries
 find_package(Threads)
-
-<LIBS>
+find_package(SFML REQUIRED audio network graphics window system)
 
 #Finally
-target_link_libraries(
-	${PROJECT_NAME} 
-	Threads::Threads
+target_link_libraries(${PROJECT_NAME} 
+    Threads::Threads 
+    ${SFML_LIBRARIES} 
+    ${SFML_DEPENDENCIES}
 )
-
