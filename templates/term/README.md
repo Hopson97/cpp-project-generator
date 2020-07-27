@@ -1,8 +1,12 @@
+#
 # Linux
+#
 /bin
 <PNAME>
 
-# Windows
+#
+#   Windows
+#
 *.dll
 *.exe
 *.sln
@@ -14,7 +18,9 @@
 Debug/
 Release/
 
-# Misc
+#
+#   Misc
+#
 *.zip
 *.temp
 *.srctrlprj
