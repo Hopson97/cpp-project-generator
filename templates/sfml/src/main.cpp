@@ -1,5 +1,7 @@
-#include "keyboard.h"
+#include "Keyboard.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+
+#include <array>
 
 int main()
 {
