@@ -23,13 +23,15 @@ if __name__ == "__main__":
 
     projectType = argv[1]
     projectName = argv[2]
-
+    
     if not projectType in templateNames:
         print("Error: No template called '" + projectType + "' exists.")
         exit(1)
+    projectType += "/"
 
+    dependancyPath = "templates/_deps/"
     templatePath = "templates/" + projectType
-    projectPath = "./" + projectName
+    projectPath = "./" + projectName + "/"
     if (os.path.isdir(projectPath)):
         print("Error: Project with the name '" + projectPath + "' already exists.")
         exit(1)
@@ -39,9 +41,33 @@ if __name__ == "__main__":
     with open(projectPath + "/config.json") as f:
         data = f.read()
     os.remove(projectPath + "/config.json")
-    config = json.loads(data)
-    
+    os.remove(projectPath + "/CMakeLists.txt")
+    os.remove(projectPath + "/README.md")
+    os.mkdir(projectPath + "/scripts/")
 
-    print(config)
+    config = json.loads(data)
+    for dep in config["deps"]:
+        if dep == "sfml":
+            shutil.copytree(dependancyPath + "cmake_modules", projectPath + "cmake_modules") 
+        else:
+            shutil.copytree(dependancyPath + dep, projectPath + dep)
+
+    def copyWithProjectName(name, loc, dest = ""):
+        shutil.copyfile("templates/" + loc + name, projectPath + dest + name + "temp")
+        with open(projectPath + dest + name + "temp", "r") as inf:
+            with open(projectPath + dest + name, "w") as outf:
+                for line in inf:
+                    outf.write(line.replace("<PNAME>", projectName))
+        os.remove(projectPath + dest + name + "temp")
+
+    
+    copyWithProjectName(".clang-format", "_common/")
+    copyWithProjectName("CMakeLists.txt", projectType)
+    copyWithProjectName("README.md", projectType)
+    copyWithProjectName(".gitignore", "_common/")
+    
+    copyWithProjectName("run.sh", "_common/", "scripts/")
+    copyWithProjectName("build.sh", "_common/", "scripts/")
+    copyWithProjectName("debug.sh", "_common/", "scripts/")
     
 
