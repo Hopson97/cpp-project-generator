@@ -38,8 +38,7 @@ target_include_directories(
 
 #Finally
 target_link_libraries(${PROJECT_NAME} 
-    glm 
-    glad 
+    lua
     Threads::Threads 
     ${SFML_LIBRARIES} 
     ${SFML_DEPENDENCIES}
