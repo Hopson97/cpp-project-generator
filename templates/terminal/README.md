@@ -1,28 +1,26 @@
-#
-# Linux
-#
-/bin
-<PNAME>
+# <PNAME>
 
-#
-#   Windows
-#
-*.dll
-*.exe
-*.sln
-*.vcxproj
-*.filters
-*.user
-*.vs
-.vscode
-Debug/
-Release/
+description here
 
-#
-#   Misc
-#
-*.zip
-*.temp
-*.srctrlprj
-*.srctrldb
-*.srctrlbm
+## Building and Running
+
+### Linux
+
+To build, at the root of the project:
+
+```sh
+sh scripts/build.sh
+```
+
+To run, at the root of the project:
+
+```sh
+sh scripts/run.sh
+```
+
+To build and run in release mode, simply add the `release` suffix:
+
+```sh
+sh scripts/build.sh release
+sh scripts/run.sh release
+```

@@ -38,9 +38,3 @@ To build and run in release mode, simply add the `release` suffix:
 sh scripts/build.sh release
 sh scripts/run.sh release
 ```
-
-You can also create a deployable build (that can be sent) by doing:
-
-```sh
-sh scripts/deploy.sh
-```
