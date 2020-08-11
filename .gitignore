@@ -3,3 +3,7 @@
 bin/
 
 test-projects/
+
+.clang-format
+
+src/

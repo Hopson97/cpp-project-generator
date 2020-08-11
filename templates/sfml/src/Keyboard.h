@@ -1,41 +1,41 @@
-
 #pragma once
 
 #include <SFML/Window/Event.hpp>
 #include <SFML/Window/Keyboard.hpp>
-
 #include <array>
 
-/**
- * Holds the state of the keyboard
- */
 class Keyboard {
   public:
-    Keyboard();
+    Keyboard()
+    {
+        std::fill(m_keys.begin(), m_keys.end(), false);
+    }
 
-    /**
-     * @brief Updates the state of the keyboard. Must be called every frame in the event
-     * loop.
-     *
-     * @param e The event to check key events for
-     */
-    void update(sf::Event e);
+    bool isKeyDown(sf::Keyboard::Key key) const
+    {
+        return m_keys[key];
+    }
 
-    /**
-     * @brief Check if a key is currently down
-     *
-     * @param key The key to check
-     * @return true The key is down
-     * @return false The key is up
-     */
-    bool isKeyDown(sf::Keyboard::Key key) const;
+    void update(sf::Event e)
+    {
+        switch (e.type) {
+            case sf::Event::KeyPressed:
+                m_keys[e.key.code] = true;
+                break;
+
+            case sf::Event::KeyReleased:
+                m_keys[e.key.code] = false;
+
+            default:
+                break;
+        }
+    }
 
   private:
-    /**
-     * @brief Resets keys back to the "unpressed" state
-     *
-     */
-    void resetKeys();
+    void resetKeys()
+    {
+        std::fill(m_keys.begin(), m_keys.end(), false);
+    }
 
     std::array<bool, sf::Keyboard::KeyCount> m_keys;
 };
