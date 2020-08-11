@@ -1,6 +1,6 @@
 #include "VertexArray.h"
 
-#include "GLDebug.h"
+#include "../Util.h"
 #include <cassert>
 #include <iostream>
 

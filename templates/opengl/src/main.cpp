@@ -1,4 +1,3 @@
-#include "GL/GLDebug.h"
 #include "GL/Shader.h"
 #include "GL/Texture.h"
 #include "GL/VertexArray.h"
@@ -7,32 +6,16 @@
 #include <SFML/Window/Window.hpp>
 #include <glad/glad.h>
 #include <iostream>
-
+#include "Util.h"
 #include <array>
 
 int main()
 {
     // Init Window, OpenGL set up etc
-    sf::ContextSettings contextSettings;
-    contextSettings.depthBits = 24;
-    contextSettings.stencilBits = 8;
-    contextSettings.antialiasingLevel = 4;
-    contextSettings.majorVersion = 3;
-    contextSettings.minorVersion = 3;
-    contextSettings.attributeFlags = sf::ContextSettings::Core;
-    sf::Window window({1280, 720}, "OpenGL", sf::Style::Close, contextSettings);
-    window.setFramerateLimit(60);
-    if (!gladLoadGL()) {
-        std::cerr << "Failed to load OpenGL, exiting.\n";
+    sf::Window window;
+    if (!initOpenGlWindow(window, 1280, 720)) {
         return 1;
     }
-    initGLDebug();
-    glCheck(glClearColor(0.1f, 0.0f, 0.0f, 0.0f));
-    glCheck(glViewport(0, 0, window.getSize().x, window.getSize().y));
-    glCheck(glEnable(GL_DEPTH_TEST));
-    glCheck(glCullFace(GL_BACK));
-    glCheck(glEnable(GL_CULL_FACE));
-    glCheck(glLineWidth(2.0f));
 
     // Create a shader
     glpp::Shader shader;
@@ -118,6 +101,7 @@ int main()
             playerPosition += rightVector(playerRotation) * PLAYER_SPEED;
         }
 
+        // Draw stuff
         auto modelmatrix = createModelMatrix(modelLocation, modelRotation);
         auto viewmatrix = createViewMartix(playerPosition, playerRotation);
         glpp::loadUniform(locModelMatrix, modelmatrix);

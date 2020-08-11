@@ -9,11 +9,10 @@ project(
 #Set executable
 add_executable(${PROJECT_NAME}     
     src/main.cpp
-    src/Keyboard.cpp
     src/Maths.cpp
+    src/Util.cpp
 
     src/GL/Framebuffer.cpp
-    src/GL/GLDebug.cpp
     src/GL/Shader.cpp
     src/GL/Texture.cpp
     src/GL/VertexArray.cpp

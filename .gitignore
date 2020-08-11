@@ -6,4 +6,4 @@ test-projects/
 
 .clang-format
 
-src/
+temp.cpp

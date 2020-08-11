@@ -1,6 +1,6 @@
 #include "Texture.h"
 
-#include "GLDebug.h"
+#include "../Util.h"
 #include <SFML/Graphics/Image.hpp>
 #include <stdexcept>
 

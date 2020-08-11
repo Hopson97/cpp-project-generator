@@ -1,6 +1,6 @@
 #include "Framebuffer.h"
 
-#include "GLDebug.h"
+#include "../Util.h"
 #include <cassert>
 #include <stdexcept>
 

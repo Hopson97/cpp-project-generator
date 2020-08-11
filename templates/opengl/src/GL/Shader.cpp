@@ -1,20 +1,10 @@
 #include "Shader.h"
 
-#include "GLDebug.h"
+#include "../Util.h"
 #include <cassert>
 #include <fstream>
 #include <glm/gtc/type_ptr.hpp>
 #include <sstream>
-
-namespace {
-    std::string loadFile(const std::string fName)
-    {
-        std::ifstream inFile(fName);
-        std::ostringstream stream;
-        stream << inFile.rdbuf();
-        return stream.str();
-    }
-} // namespace
 
 namespace glpp {
     Shader& Shader::operator=(Shader&& other) noexcept
@@ -45,7 +35,7 @@ namespace glpp {
 
     void Shader::addShader(const std::string& filename, ShaderType type)
     {
-        std::string source = loadFile("data/shaders/" + filename + ".glsl");
+        std::string source = loadFileToString("data/shaders/" + filename + ".glsl");
         auto shaderId = glCheck(glCreateShader(static_cast<GLenum>(type)));
 
         const GLchar* const shaderSourcePtr = source.data();
