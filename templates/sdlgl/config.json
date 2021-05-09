@@ -1,0 +1,9 @@
+{
+    "deps": [
+        "cglm",
+        "nuklear",
+        "glad",
+        "stb"
+
+    ]
+}
