@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 
 #Set up project
 project(
-    nukclear_sdl_gl_test 
+    <PNAME> 
     VERSION 1.0
 )
 
