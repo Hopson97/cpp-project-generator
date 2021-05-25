@@ -3,6 +3,10 @@ cmake_minimum_required(VERSION 3.10)
 #Set up project
 project(<PNAME> VERSION 1.0)
 
+include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
+conan_basic_setup()
+
+
 #Set executable
 add_executable(${PROJECT_NAME}     
     src/main.cpp
@@ -18,7 +22,7 @@ if(MSVC)
     	/W4 /WX)
 else()
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-		-Wall -Wextra -pedantic -Werror)		#Warning flags
+		-Wall -Wextra -pedantic)
 endif()
 
 #Set module path
@@ -26,11 +30,9 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
 
 #Find libraries
 find_package(Threads)
-find_package(SFML REQUIRED audio network graphics window system)
 
 #Finally
 target_link_libraries(${PROJECT_NAME} 
     Threads::Threads 
-    ${SFML_LIBRARIES} 
-    ${SFML_DEPENDENCIES}
+    ${CONAN_LIBS}
 )

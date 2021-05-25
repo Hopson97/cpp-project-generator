@@ -48,13 +48,10 @@ if __name__ == "__main__":
     config = json.loads(data)
     deps = []
     for dep in config["deps"]:
-        if dep == "sfml":
-            shutil.copytree(dependancyPath + "cmake_modules", projectPath + "cmake_modules") 
-        else:
-            if not os.path.isdir(projectPath + "deps/"): 
-                os.mkdir(projectPath + "deps/")
-            shutil.copytree(dependancyPath + dep, projectPath + "deps/" + dep)
-            deps.append(dep)
+        if not os.path.isdir(projectPath + "deps/"): 
+            os.mkdir(projectPath + "deps/")
+        shutil.copytree(dependancyPath + dep, projectPath + "deps/" + dep)
+        deps.append(dep)
     if len(deps) > 0:
         with open(projectPath + "deps/CMakeLists.txt", "w") as outfile:
             for dep in deps:

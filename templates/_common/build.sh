@@ -4,7 +4,7 @@ target_release() {
     cd release
     cmake -DCMAKE_BUILD_TYPE=Release ../..
     make
-    echo "Built target in bin/release/"
+    echo "Built target in build/release/"
     cd ../..
 }
 
@@ -12,7 +12,7 @@ target_debug() {
     cd debug 
     cmake -DCMAKE_BUILD_TYPE=Debug ../..
     make
-    echo "Built target in bin/debug/"
+    echo "Built target in build/debug/"
     cd ../..
 }
 
@@ -27,19 +27,21 @@ then
     mkdir -p <PNAME> 
 fi
 
-# Creates the folder for the binaries
+# Creates the folder for the buildaries
 mkdir -p <PNAME>
 mkdir -p <PNAME>/Data
-mkdir -p bin
-mkdir -p bin/release
-mkdir -p bin/debug
-cd bin
+mkdir -p build
+mkdir -p build/release
+mkdir -p build/debug
+cd build
+
+conan install .. -s compiler.libcxx=libstdc++11 --build=missing
 
 # Builds target
 if [ "$1" = "release" ]
 then
     target_release
-    cp bin/release/<PNAME>  <PNAME>/<PNAME> 
+    cp build/release/<PNAME>  <PNAME>/<PNAME> 
 else
     target_debug
 fi

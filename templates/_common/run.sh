@@ -2,7 +2,7 @@
 
 if [ "$1" = "release" ]
 then
-    ./bin/release/<PNAME> 
+    ./build/release/bin/<PNAME> 
 else
-    ./bin/debug/<PNAME> 
+    ./build/debug/bin/<PNAME> 
 fi

@@ -1,7 +1,5 @@
 {
     "deps": [
-        "sfml",
-        "glad",
-        "glm"
+        "glad"
     ]
 }

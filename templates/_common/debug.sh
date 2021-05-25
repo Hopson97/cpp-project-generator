@@ -1,4 +1,4 @@
 #!/bin/bash
 
 sh scripts/build.sh
-gdb ./bin/debug/<PNAME> 
+gdb ./build/debug/bin/<PNAME> 
