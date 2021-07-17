@@ -13,13 +13,16 @@ conan_basic_setup()
 #Set executable
 add_executable(${PROJECT_NAME}     
     src/main.cpp
+    src/GUI.cpp
     src/Maths.cpp
-    src/Util.cpp
+    src/Utility.cpp
+    src/Game.cpp
 
-    src/GL/Framebuffer.cpp
-    src/GL/Shader.cpp
-    src/GL/Texture.cpp
-    src/GL/VertexArray.cpp
+    src/Graphics/Framebuffer.cpp
+    src/Graphics/Mesh.cpp
+    src/Graphics/Shader.cpp
+    src/Graphics/Texture.cpp
+    src/Graphics/VertexArray.cpp
 )
 
 #Set C++17
@@ -28,11 +31,13 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
 #Set flags
 if(MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "/O2")
+    set(CMAKE_CXX_FLAGS_RELEASE "/Ox")
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-    	/W4 /WX)
+    	/W4)
 else()
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-		-Wall -Wextra -pedantic -Werror)		
+		-Wall -Wextra -pedantic)		
 endif()
 
 
@@ -49,6 +54,7 @@ target_include_directories(
 #Finally
 target_link_libraries(${PROJECT_NAME} 
     glad 
+    nuklear
     Threads::Threads 
     ${CMAKE_DL_LIBS}
     ${CONAN_LIBS}

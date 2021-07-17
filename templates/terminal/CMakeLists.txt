@@ -29,8 +29,6 @@ endif()
 #Find libraries
 find_package(Threads)
 
-<LIBS>
-
 #Finally
 target_link_libraries(
 	${PROJECT_NAME} 
