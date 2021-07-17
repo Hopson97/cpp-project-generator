@@ -1,16 +1,18 @@
 cmake_minimum_required(VERSION 3.10)
 
 #Set up project
-project(<PNAME> VERSION 1.0)
-
-#Set executable
-set(SOURCES
-    src/main.cpp
+project(
+    <PNAME> 
+    VERSION 1.0
 )
 
-add_executable(
-	${PROJECT_NAME} 
-	src/main.cpp
+include(${CMAKE_BINARY_DIR}/../conanbuildinfo.cmake)
+conan_basic_setup()
+
+
+#Set executable
+add_executable(${PROJECT_NAME}     
+    src/main.cpp
 )
 
 #Set C++17
@@ -19,19 +21,20 @@ set_target_properties(${PROJECT_NAME} PROPERTIES CXX_EXTENSIONS OFF)
 
 #Set flags
 if(MSVC)
+    set(CMAKE_CXX_FLAGS_RELEASE "/O2")
+    set(CMAKE_CXX_FLAGS_RELEASE "/Ox")
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-    	/W4 /WX)
+    	/W4)
 else()
   	target_compile_options(${PROJECT_NAME} PRIVATE 
-		-Wall -Wextra -pedantic)	
+		-Wall -Wextra -pedantic)		
 endif()
 
 #Find libraries
 find_package(Threads)
 
 #Finally
-target_link_libraries(
-	${PROJECT_NAME} 
-	Threads::Threads
+target_link_libraries(${PROJECT_NAME} 
+    Threads::Threads 
+    ${CONAN_LIBS}
 )
-
