@@ -41,7 +41,7 @@ conan install .. -s compiler.libcxx=libstdc++11 --build=missing
 if [ "$1" = "release" ]
 then
     target_release
-    cp build/release/<PNAME>  <PNAME>/<PNAME> 
+    cp build/release/bin/<PNAME>  <PNAME>/<PNAME> 
 else
     target_debug
 fi
