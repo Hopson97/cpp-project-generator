@@ -1,6 +1,7 @@
 # Linux
 /bin
 <PNAME>
+build/
 
 # Windows
 *.dll
