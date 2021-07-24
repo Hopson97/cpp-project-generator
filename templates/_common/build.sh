@@ -46,4 +46,4 @@ else
     target_debug
 fi
 
-cp -R Data <PNAME>/Data
+cp -R Data <PNAME>/
