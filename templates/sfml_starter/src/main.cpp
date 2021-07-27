@@ -8,21 +8,33 @@
 
 int main()
 {
+    // Set up window and gui
     sf::RenderWindow window({1280, 720}, "SFML");
     window.setFramerateLimit(60);
     window.setKeyRepeatEnabled(false);
-
     ImGui::SFML::Init(window);
 
-    Keyboard keyboard;
+    // Set up screen system
     ScreenManager screens;
     screens.pushScreen(std::make_unique<ScreenMainMenu>(&screens));
     screens.update();
 
+    // Time step, 30 ticks per second
+    const sf::Time timePerUpdate = sf::seconds(1.0f / 30.0f);
+    sf::Clock timer;
+    sf::Time lastTime = sf::Time::Zero;
+    sf::Time lag = sf::Time::Zero;
+
+    // Misc/ Util
+    Keyboard keyboard;
     sf::Clock updateClock;
+
     while (window.isOpen() && !screens.isEmpty()) {
+        Screen* screen = &screens.peekScreen();
+
         sf::Event e;
         while (window.pollEvent(e)) {
+            screen->onEvent(e);
             keyboard.update(e);
             ImGui::SFML::ProcessEvent(e);
             switch (e.type) {
@@ -39,16 +51,31 @@ int main()
                     break;
             }
         }
-        auto dt = updateClock.restart();
+
+        // Get times
+        sf::Time dt = updateClock.restart();
+        sf::Time time = timer.getElapsedTime();
+        sf::Time elapsed = time - lastTime;
+        lastTime = time;
+        lag += elapsed;     
+
+        // Real time stuff
+        screen->onInput(window);
+        screen->onUpdate(dt);
         ImGui::SFML::Update(window, dt);
 
-        screens.peekScreen().onInput();
-        screens.peekScreen().onUpdate(dt);
+        // Fixed time update
+        while (lag >= timePerUpdate) {
+            lag -= timePerUpdate;
+            screen->onFixedUpdate(elapsed);
+        }
 
+
+        // Rendering
         window.clear({0, 200, 100});
-        screens.peekScreen().onRender(&window);
+        screen->onRender(&window);
 
-        screens.peekScreen().onGUI();
+        screen->onGUI();
         ImGui::SFML::Render(window);
 
         window.display();
