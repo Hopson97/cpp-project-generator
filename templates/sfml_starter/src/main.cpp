@@ -57,7 +57,7 @@ int main()
         sf::Time time = timer.getElapsedTime();
         sf::Time elapsed = time - lastTime;
         lastTime = time;
-        lag += elapsed;     
+        lag += elapsed;
 
         // Real time stuff
         screen->onInput(window);
@@ -69,7 +69,6 @@ int main()
             lag -= timePerUpdate;
             screen->onFixedUpdate(elapsed);
         }
-
 
         // Rendering
         window.clear({0, 200, 100});
