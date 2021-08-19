@@ -8,7 +8,7 @@ ScreenGame::ScreenGame(ScreenManager* stack)
     , m_recruitWalkAnimation(40, 40)
 {
     m_sprite.setSize({64, 64});
-    m_recruitTexture.loadFromFile("Data/Recruit.png");
+    m_recruitTexture.loadFromFile("data/Recruit.png");
     //m_recruitWalkAnimation.addFrame(0, 0, sf::milliseconds(500));
     m_recruitWalkAnimation.addFrame(0, 1, sf::milliseconds(500));
     m_recruitWalkAnimation.addFrame(0, 2, sf::milliseconds(500));

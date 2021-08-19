@@ -99,8 +99,8 @@ void Shader::loadFromMemory(const char* vertexSource, const char* fragmentSource
 void Shader::loadFromFile(const char* vertexFilename, const char* fragmentFileName)
 {
 
-    char vertfullFileName[128] = "Data/Shaders/";
-    char fragfullFileName[128] = "Data/Shaders/";
+    char vertfullFileName[128] = "data/Shaders/";
+    char fragfullFileName[128] = "data/Shaders/";
     strcat(vertfullFileName, vertexFilename);
     strcat(fragfullFileName, fragmentFileName);
 

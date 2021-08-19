@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Animation.h"
-#include "Screen.h"
+#include "../Animation.h"
+#include "../Screen.h"
 
 class ScreenGame final : public Screen {
     enum class Menu {

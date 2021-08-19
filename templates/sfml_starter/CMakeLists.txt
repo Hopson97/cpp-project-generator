@@ -12,9 +12,10 @@ add_executable(${PROJECT_NAME}
     src/main.cpp
 
 	src/Animation.cpp
+	src/Profiler.cpp
 	src/Screen.cpp
-	src/ScreenMainMenu.cpp
-	src/ScreenGame.cpp
+	src/Game/ScreenMainMenu.cpp
+	src/Game/ScreenGame.cpp
 )
 
 #Set C++17

@@ -29,7 +29,7 @@ Texture2D::~Texture2D()
 
 void Texture2D::loadFromFile(const char* file, int mipmapLevels)
 {
-    char texturePath[128] = "Data/Textures/";
+    char texturePath[128] = "data/Textures/";
     std::strcat(texturePath, file);
 
     sf::Image img;
@@ -143,7 +143,7 @@ GLuint TextureArray2D::addTexture(const char* file)
         std::cout << "Cannot add anymore textures, maxmium has been reached.\n";
         return 0;
     }
-    char texturePath[128] = "Data/Textures/";
+    char texturePath[128] = "data/Textures/";
     std::strcat(texturePath, file);
 
     sf::Image img;

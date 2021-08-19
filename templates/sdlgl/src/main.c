@@ -131,7 +131,7 @@ int main(void)
 
     // Load shaders
     GLuint shader =
-        loadShaders("Data/Shaders/MinVertex.glsl", "Data/Shaders/MinFragment.glsl");
+        loadShaders("data/Shaders/MinVertex.glsl", "data/Shaders/MinFragment.glsl");
 
     //
     // Load up a texture
@@ -140,7 +140,7 @@ int main(void)
     int width;
     int height;
     int channels;
-    unsigned char* imageData = stbi_load("Data/Textures/opengl_logo.png", &width, &height,
+    unsigned char* imageData = stbi_load("data/Textures/opengl_logo.png", &width, &height,
                                          &channels, STBI_rgb_alpha);
 
     GLuint texture;
