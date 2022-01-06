@@ -36,6 +36,7 @@ if __name__ == "__main__":
         print("Error: Project with the name '" + projectPath + "' already exists.")
         exit(1)
 
+
     shutil.copytree(templatePath, projectPath)
 
     with open(projectPath + "/config.json") as f:
@@ -57,22 +58,29 @@ if __name__ == "__main__":
             for dep in deps:
                 outfile.write("add_subdirectory(" + dep + ")\n")
 
-    def copyWithProjectName(name, loc, dest = ""):
+    def copy_generator_file(name, loc, dest = ""):
         shutil.copyfile("templates/" + loc + name, projectPath + dest + name + "temp")
-        with open(projectPath + dest + name + "temp", "r") as inf:
-            with open(projectPath + dest + name, "w") as outf:
-                for line in inf:
-                    outf.write(line.replace("<PNAME>", projectName))
-        os.remove(projectPath + dest + name + "temp")
 
+    def replace_project_name(startpath):
+        for root, dirs, files in os.walk(startpath):
+            for f in files:
+                file_path = os.path.join(root, f)
+                print("replacing <PNAME> in : " + file_path)
+                with open(file_path, "rt") as inf:
+                    data = inf.read()
+                    data = data.replace("<PNAME>", projectName)
+                    data = data.replace("<#PNAME#>", projectName.upper())
+
+                with open(file_path, "wt") as outf:
+                    outf.write(data)
+                
+    replace_project_name(projectPath)            
     
-    copyWithProjectName(".clang-format", "_common/")
-    copyWithProjectName("CMakeLists.txt", projectType)
-    copyWithProjectName("README.md", projectType)
-    copyWithProjectName(".gitignore", "_common/")
+    copy_generator_file(".clang-format", "_common/")
+    copy_generator_file(".gitignore", "_common/")
     
-    copyWithProjectName("run.sh", "_common/", "scripts/")
-    copyWithProjectName("build.sh", "_common/", "scripts/")
-    copyWithProjectName("debug.sh", "_common/", "scripts/")
+    copy_generator_file("run.sh", "_common/", "scripts/")
+    copy_generator_file("build.sh", "_common/", "scripts/")
+    copy_generator_file("debug.sh", "_common/", "scripts/")
     
 
