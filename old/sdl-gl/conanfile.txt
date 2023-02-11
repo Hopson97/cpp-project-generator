@@ -1,0 +1,8 @@
+[requires]
+glm/cci.20220420
+sdl/2.26.1
+
+[options]
+
+[generators]
+cmake

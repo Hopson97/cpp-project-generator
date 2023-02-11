@@ -1,0 +1,7 @@
+{
+    "deps": [
+        "imgui_sdl",
+        "glad",
+        "stb"
+    ]
+}
