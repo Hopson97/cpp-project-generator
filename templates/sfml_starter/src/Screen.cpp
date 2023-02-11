@@ -1,5 +1,5 @@
 #include "Screen.h"
-#include <imgui_sfml/imgui.h>
+#include <imgui.h>
 
 void ScreenManager::pushScreen(std::unique_ptr<Screen> screen)
 {
@@ -26,37 +26,40 @@ void ScreenManager::changeScreen(std::unique_ptr<Screen> screen)
 
 void ScreenManager::update()
 {
-    for (Action& action : m_actions) {
-        switch (action.kind) {
-            case Action::Kind::Push:
-                m_screens.push(std::move(action.screen));
-                break;
+    for (Action &action : m_actions)
+    {
+        switch (action.kind)
+        {
+        case Action::Kind::Push:
+            m_screens.push(std::move(action.screen));
+            break;
 
-            case Action::Kind::Pop:
+        case Action::Kind::Pop:
+            m_screens.pop();
+            break;
+
+        case Action::Kind::Change:
+            while (!m_screens.empty())
+            {
                 m_screens.pop();
-                break;
-
-            case Action::Kind::Change:
-                while (!m_screens.empty()) {
-                    m_screens.pop();
-                }
-                m_screens.push(std::move(action.screen));
-                break;
+            }
+            m_screens.push(std::move(action.screen));
+            break;
         }
     }
     m_actions.clear();
 }
 
-Screen& ScreenManager::peekScreen() { return *m_screens.top(); }
+Screen &ScreenManager::peekScreen() { return *m_screens.top(); }
 
 bool ScreenManager::isEmpty() const { return m_screens.empty(); }
 
-Screen::Screen(ScreenManager* screens)
+Screen::Screen(ScreenManager *screens)
     : m_pScreens(screens)
 {
 }
 
-bool imguiBeginMenu(const char* name)
+bool imguiBeginMenu(const char *name)
 {
     ImVec2 windowSize(1280 / 4, 720 / 2);
     ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
@@ -68,7 +71,7 @@ bool imguiBeginMenu(const char* name)
                             ImGuiWindowFlags_AlwaysAutoResize);
 }
 
-bool imguiButtonCustom(const char* text)
+bool imguiButtonCustom(const char *text)
 {
     ImGui::SetCursorPos({ImGui::GetCursorPosX() + 100, ImGui::GetCursorPosY() + 20});
     return ImGui::Button(text, {100, 50});

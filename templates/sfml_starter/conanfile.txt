@@ -1,5 +1,6 @@
 [requires]
-sfml/2.5.1@bincrafters/stable
+sfml/2.5.1
+imgui/1.89.2
 
 [options]
 

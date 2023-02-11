@@ -101,8 +101,8 @@ This will create a project folder `cpp/my-app/` with the structure
 After doing `cd` to the directory, it can then be built and ran:
 
 ```bash
-sh scripts/build.sh
-sh scripts/run.sh
+./scripts/build.sh
+./scripts/run.sh
 ```
 
 After the build stage, it creates the following structure:
@@ -131,7 +131,7 @@ Where the target was built in the `bin/debug/` directory.
 To build and run in release mode, use the `release` argument:
 
 ```bash
-sh scripts/build.sh release
-sh scripts/run.sh release
+./scripts/build.sh release
+./scripts/run.sh release
 ```
 
