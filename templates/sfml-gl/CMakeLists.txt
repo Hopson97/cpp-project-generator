@@ -23,6 +23,9 @@ add_executable(${PROJECT_NAME}
     src/Graphics/Shader.cpp
     src/Graphics/Texture.cpp
     src/Graphics/VertexArray.cpp
+
+    src/imgui/imgui_impl_opengl3.cpp
+    src/imgui/imgui_impl_sfml.cpp
 )
 
 #Set C++17
@@ -54,7 +57,6 @@ target_include_directories(
 #Finally
 target_link_libraries(${PROJECT_NAME} 
     glad 
-    nuklear
     Threads::Threads 
     ${CMAKE_DL_LIBS}
     ${CONAN_LIBS}

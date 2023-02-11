@@ -4,11 +4,7 @@
 #include "Texture.h"
 #include <stdio.h>
 
-Framebuffer::Framebuffer()
-
-{
-    glCreateFramebuffers(1, &m_fbo);
-}
+Framebuffer::Framebuffer() { glCreateFramebuffers(1, &m_fbo); }
 
 void Framebuffer::create(GLuint width, GLuint height)
 {
@@ -62,7 +58,7 @@ const Texture2D* Framebuffer::addTexture()
 const Texture2D* Framebuffer::addDepthTexture()
 {
     Texture2D& t = m_attachments.emplace_back();
-    t.createFramebufferDepth(WIDTH, HEIGHT);
+    t.createFramebufferDepth(m_width, m_height);
 
     glNamedFramebufferTexture(m_fbo, GL_DEPTH_ATTACHMENT, t.m_handle, 0);
 
@@ -77,12 +73,14 @@ void Framebuffer::addRenderBuffer()
 {
     glCreateRenderbuffers(1, &m_rbo);
     glNamedRenderbufferStorage(m_rbo, GL_DEPTH24_STENCIL8, m_width, m_height);
-    glNamedFramebufferRenderbuffer(m_fbo, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, m_rbo);
+    glNamedFramebufferRenderbuffer(m_fbo, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER,
+                                   m_rbo);
 }
 
 void Framebuffer::finish()
 {
-    if (auto status = glCheckNamedFramebufferStatus(m_fbo, GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    if (auto status = glCheckNamedFramebufferStatus(m_fbo, GL_FRAMEBUFFER) !=
+                      GL_FRAMEBUFFER_COMPLETE) {
         setTextColourRGB(255, 0, 0);
         fprintf(stderr, "Failed to create framebuffer. %d\n", status);
         setTextColourRGB(255, 255, 255);
@@ -96,8 +94,8 @@ void Framebuffer::bind() const
     glViewport(0, 0, m_width, m_height);
 }
 
-void Framebuffer::unbind()
+void Framebuffer::unbind(unsigned windowWidth, unsigned windowHeight)
 {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    glViewport(0, 0, WIDTH, HEIGHT);
+    glViewport(0, 0, windowWidth, windowHeight);
 }

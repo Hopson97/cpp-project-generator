@@ -4,12 +4,6 @@
 #include <SFML/Window/Window.hpp>
 #include <array>
 
-// Default window height and width
-#define WIDTH 1600
-#define HEIGHT 900
-
-char* getFileContent(const char* fileName);
-
 // Colour Util
 struct Colour {
     uint8_t red = 255;
@@ -18,22 +12,16 @@ struct Colour {
     uint8_t alpha = 255;
 };
 
-enum ColourSetMode {
-    COL_SET_BG = 48,
-    COL_SET_FG = 38,
+enum class TerminalColourMode : uint8_t {
+    Background = 48,
+    Foreground = 38,
 };
 
 class Keyboard {
   public:
-    Keyboard()
-    {
-        std::fill(m_keys.begin(), m_keys.end(), false);
-    }
+    Keyboard() { std::fill(m_keys.begin(), m_keys.end(), false); }
 
-    bool isKeyDown(sf::Keyboard::Key key) const
-    {
-        return m_keys[key];
-    }
+    bool isKeyDown(sf::Keyboard::Key key) const { return m_keys[key]; }
 
     void update(sf::Event e)
     {
@@ -60,3 +48,5 @@ bool initWindow(sf::Window* window);
 const Colour COLOUR_SKY_BLUE = {135, 206, 235, 255};
 const Colour COLOUR_SAND = {235, 214, 135, 255};
 void setClearColour(Colour colour);
+
+char* getFileContent(const char* fileName);

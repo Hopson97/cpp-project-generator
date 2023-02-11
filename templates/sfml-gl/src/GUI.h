@@ -24,7 +24,8 @@ void guiDebugScreen(const Transform& transform);
 
 struct SpriteRenderer {
   public:
-    SpriteRenderer();
+    SpriteRenderer(unsigned windowWidth, unsigned windowHeight);
+    void onWindowResize(unsigned windowWidth, unsigned windowHeight);
     void render(const Texture2D& texture, float x, float y, float width, float height);
 
   private:

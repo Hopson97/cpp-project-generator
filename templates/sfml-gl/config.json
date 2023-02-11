@@ -1,6 +1,3 @@
 {
-    "deps": [
-        "glad",
-        "nuklearpp"
-    ]
+  "deps": ["glad"]
 }

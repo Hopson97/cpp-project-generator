@@ -3,10 +3,45 @@
 #include <cstdlib>
 #include <glad/glad.h>
 
-static void GLAPIENTRY glDebugCallback(GLenum source, GLenum type, GLuint, GLenum severity, GLsizei,
-                                       const GLchar* message, const void*)
-{
-    // clang-format off
+namespace {
+    int isColourSame(Colour a, Colour b)
+    {
+        return a.red == b.red && a.green == b.green && a.blue == b.blue;
+    }
+
+    void setTerminalColour(Colour colour, TerminalColourMode terminalMode)
+    {
+        static bool isFirstTimeBG = true;
+        static bool isFirstTimeFG = true;
+        static Colour currentTextColour;
+        static Colour currentBackgroundColour;
+
+        uint8_t r = colour.red;
+        uint8_t g = colour.green;
+        uint8_t b = colour.blue;
+
+        int mode = static_cast<int>(terminalMode);
+
+        switch (terminalMode) {
+            case TerminalColourMode::Background:
+                if (!isColourSame(currentBackgroundColour, colour) || isFirstTimeBG) {
+                    printf("\x1B[%d;2;%d;%d;%dm", mode, r, g, b);
+                    isFirstTimeBG = 1;
+                }
+                break;
+
+            case TerminalColourMode::Foreground:
+                if (!isColourSame(currentTextColour, colour) || isFirstTimeFG) {
+                    printf("\x1B[%d;2;%d;%d;%dm", mode, r, g, b);
+                    isFirstTimeFG = 1;
+                }
+                break;
+        }
+    }
+    void GLAPIENTRY glDebugCallback(GLenum source, GLenum type, GLuint, GLenum severity,
+                                    GLsizei, const GLchar* message, const void*)
+    {
+        // clang-format off
     const char* severityString = "?";
     switch (severity) {
         case GL_DEBUG_SEVERITY_HIGH:            severityString = "high";    break;
@@ -36,14 +71,16 @@ static void GLAPIENTRY glDebugCallback(GLenum source, GLenum type, GLuint, GLenu
         case GL_DEBUG_TYPE_POP_GROUP:               typeString = "pop group";           break;
         case GL_DEBUG_TYPE_OTHER:                   typeString = "other";               break;
     }
-    // clang-format on
+        // clang-format on
 
-    fprintf(stderr, "OpenGL Message.\n Type: %s\nSeverity: %s\nSource: %s\nMessage: %s\n\n", typeString, severityString,
-            sourceString, message);
+        fprintf(stderr,
+                "OpenGL Message.\n Type: %s\nSeverity: %s\nSource: %s\nMessage: %s\n\n",
+                typeString, severityString, sourceString, message);
 
-    if (severity == GL_DEBUG_SEVERITY_HIGH)
-        throw(std::runtime_error("GL Error"));
-}
+        if (severity == GL_DEBUG_SEVERITY_HIGH)
+            throw(std::runtime_error("GL Error"));
+    }
+} // namespace
 
 static void initGLDebug()
 {
@@ -54,47 +91,16 @@ static void initGLDebug()
 #endif
     glDebugMessageCallback(glDebugCallback, NULL);
 
-    glDebugMessageControl(GL_DEBUG_SOURCE_SHADER_COMPILER, GL_DEBUG_TYPE_OTHER, GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL,
-                          GL_FALSE);
+    glDebugMessageControl(GL_DEBUG_SOURCE_SHADER_COMPILER, GL_DEBUG_TYPE_OTHER,
+                          GL_DEBUG_SEVERITY_NOTIFICATION, 0, NULL, GL_FALSE);
 #endif
-}
-
-static int isColourSame(Colour a, Colour b)
-{
-    return a.red == b.red && a.green == b.green && a.blue == b.blue;
-}
-
-static void setTerminalColour(Colour colour, enum ColourSetMode mode)
-{
-    static int isFirstTimeBG = 1;
-    static int isFirstTimeFG = 1;
-    static struct Colour currentTextColour;
-    static struct Colour currentBackgroundColour;
-    uint8_t r = colour.red;
-    uint8_t g = colour.green;
-    uint8_t b = colour.blue;
-    switch (mode) {
-        case COL_SET_BG:
-            if (!isColourSame(currentBackgroundColour, colour) || isFirstTimeBG) {
-                printf("\x1B[%d;2;%d;%d;%dm", mode, r, g, b);
-                isFirstTimeBG = 1;
-            }
-            break;
-
-        case COL_SET_FG:
-            if (!isColourSame(currentTextColour, colour) || isFirstTimeFG) {
-                printf("\x1B[%d;2;%d;%d;%dm", mode, r, g, b);
-                isFirstTimeFG = 1;
-            }
-            break;
-    }
 }
 
 char* getFileContent(const char* fileName)
 {
     char* buffer = NULL;
     long length = 0;
-    FILE* file = fopen(fileName, "r");
+    auto file = fopen(fileName, "r");
 
     if (file) {
         fseek(file, 0, SEEK_END);
@@ -113,32 +119,22 @@ char* getFileContent(const char* fileName)
 
 void setBackgroundColour(Colour colour)
 {
-    setTerminalColour(colour, COL_SET_BG);
+    setTerminalColour(colour, TerminalColourMode::Background);
 }
 
 void setTextColour(Colour colour)
 {
-    setTerminalColour(colour, COL_SET_FG);
+    setTerminalColour(colour, TerminalColourMode::Foreground);
 }
 
 void setTextColourRGB(uint8_t red, uint8_t green, uint8_t blue)
 {
-    struct Colour colour = {
-        red,
-        green,
-        blue,
-    };
-    setTerminalColour(colour, COL_SET_FG);
+    setTerminalColour({red, green, blue}, TerminalColourMode::Foreground);
 }
 
 void setBackgroundColourRGB(uint8_t red, uint8_t green, uint8_t blue)
 {
-    struct Colour colour = {
-        red,
-        green,
-        blue,
-    };
-    setTerminalColour(colour, COL_SET_BG);
+    setTerminalColour({red, green, blue}, TerminalColourMode::Background);
 }
 
 bool initWindow(sf::Window* window)
@@ -150,9 +146,11 @@ bool initWindow(sf::Window* window)
     contextSettings.majorVersion = 4;
     contextSettings.minorVersion = 5;
     contextSettings.attributeFlags = sf::ContextSettings::Core;
-    window->create({1600, 900}, "Y A V G E", sf::Style::Close, contextSettings);
-    window->setPosition({(int)sf::VideoMode::getDesktopMode().width / 2 + 150, HEIGHT / 16});
+    window->create({1600, 900}, "OpenGL", sf::Style::Default, contextSettings);
+    // window->setPosition(
+    //     {(int)sf::VideoMode::getDesktopMode().width / 2 + 150, HEIGHT / 16});
     window->setMouseCursorVisible(false);
+    // window->setMouseCursorGrabbed(true);
     if (!gladLoadGL()) {
         printf("Error: Could not load OpenGL.");
         return false;

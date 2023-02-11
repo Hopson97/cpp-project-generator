@@ -17,15 +17,17 @@ class Keyboard;
 class Game {
 
   public:
-    Game();
+    Game(unsigned windowWidth, unsigned windowHeight);
 
     void onInput(const Keyboard& keyboard, const sf::Window& window, bool isMouseActive);
 
     void onUpdate();
 
-    void onRender();
+    void onRender(const sf::Window& window);
 
     void onGUI();
+
+    void onResize(int width, int height);
 
   private:
     void renderScene(const glm::mat4& projectionViewMatrix);
@@ -42,4 +44,6 @@ class Game {
     glm::mat4 m_projectionMatrix;
 
     sf::Clock m_timer;
+
+    SpriteRenderer m_spriteRenderer;
 };

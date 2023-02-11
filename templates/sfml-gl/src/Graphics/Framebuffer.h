@@ -17,7 +17,7 @@ class Framebuffer final {
 
     void bind() const;
 
-    static void unbind();
+    static void unbind(unsigned windowWidth, unsigned windowHeight);
 
   private:
     std::vector<Texture2D> m_attachments;

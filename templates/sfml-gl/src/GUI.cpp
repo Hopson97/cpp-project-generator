@@ -1,14 +1,15 @@
 #include "GUI.h"
 
-#include "Game.h"
-#include "Maths.h"
-#include "Utility.h"
-#include <nuklearpp/nuklear_def.h>
-#include <nuklearpp/nuklear_sfml_gl3.h>
-
+#include "imgui/imgui_impl_opengl3.h"
+#include "imgui/imgui_wrapper.h"
+#include <imgui.h>
 #include <iomanip>
 #include <locale>
 #include <sstream>
+
+#include "Game.h"
+#include "Maths.h"
+#include "Utility.h"
 
 template <class T>
 std::string formatNumber(T value)
@@ -19,104 +20,72 @@ std::string formatNumber(T value)
     return ss.str();
 }
 
-#define MAX_VERTEX_MEMORY 0x80000
-#define MAX_ELEMENT_MEMORY 0x80000
-
-struct nk_context* ctx;
 sf::Clock fpsClock;
 float frames = 0;
 float fps;
 float frameTime = 0;
 
-const sf::Window* p_window = nullptr;
-
 int window_flags = 0;
 
 void guiInit(sf::Window& window)
 {
-    window_flags |= NK_WINDOW_BORDER;
-    window_flags |= NK_WINDOW_SCALABLE;
-    window_flags |= NK_WINDOW_MOVABLE;
-    window_flags |= NK_WINDOW_NO_SCROLLBAR;
-    window_flags |= NK_WINDOW_SCALE_LEFT;
-    window_flags |= NK_WINDOW_MINIMIZABLE;
-    p_window = &window;
-    // set_style(ctx, THEME_WHITE);
-    ctx = nk_sfml_init(&window);
-    {
-        struct nk_font_atlas* atlas;
-        nk_sfml_font_stash_begin(&atlas);
-        /*struct nk_font *droid = nk_font_atlas_add_from_file(atlas,
-         * "../../../extra_font/DroidSans.ttf", 14, 0);*/
-        nk_sfml_font_stash_end();
-    }
-    // nk_set_style(ctx, THEME_DARK);
+    ImGui_SFML_OpenGL3::init(window);
+    ImGuiStyle& style = ImGui::GetStyle();
+    style.WindowRounding = 2;
+    style.FrameRounding = 0;
+    style.PopupRounding = 0;
+    style.ScrollbarRounding = 0;
+    style.TabRounding = 6;
 }
 
-void guiShutdown(void)
-{
-    nk_sfml_shutdown();
-}
+void guiShutdown() { ImGui_SFML_OpenGL3::shutdown(); }
 
-void guiBeginFrame(void)
-{
-    nk_input_begin(ctx);
-    frames++;
-    if (fpsClock.getElapsedTime().asSeconds() >= 1.0f) {
-        fps = frames;
-        frameTime = (float)fpsClock.getElapsedTime().asMilliseconds() / frames;
+void guiBeginFrame() { ImGui_SFML_OpenGL3::startFrame(); }
 
-        fpsClock.restart();
-        frames = 0;
-    }
-}
+void guiProcessEvent(sf::Event& event) { ImGui_ImplSfml_ProcessEvent(event); }
 
-void guiProcessEvent(sf::Event& event)
-{
-    nk_sfml_handle_event(&event);
-}
-
-void guiEndFrame(void)
-{
-    if (p_window->isOpen()) {
-        nk_sfml_render(NK_ANTI_ALIASING_ON, MAX_VERTEX_MEMORY, MAX_ELEMENT_MEMORY);
-    }
-}
+void guiEndFrame() { ImGui_SFML_OpenGL3::endFrame(); }
 
 void guiDebugScreen(const Transform& transform)
 {
-    static int wireframe = false;
-    if (nk_begin(ctx, "Debug Window", nk_rect(10, 10, 300, 130), window_flags)) {
-        nk_layout_row_dynamic(ctx, 12, 1);
-        nk_labelf(ctx, NK_STATIC, "Player Position: (%.*f, %.*f, %.*f)", 2, transform.position[0], 2,
-                  transform.position[1], 2, transform.position[2]);
+    static bool wireframe = false;
 
-        nk_labelf(ctx, NK_STATIC, "Player Rotation: (%.*f, %.*f, %.*f)", 2, transform.rotation[0], 2,
-                  transform.rotation[1], 2, transform.rotation[2]);
+    if (ImGui::Begin("Debug Window", nullptr, window_flags)) {
+        ImGui::Text("Player Position: (%.*f, %.*f, %.*f)", 2, transform.position[0], 2,
+                    transform.position[1], 2, transform.position[2]);
 
-        nk_labelf(ctx, NK_STATIC, "FPS: %f", fps);
-        nk_labelf(ctx, NK_STATIC, "Frame Time: %f", frameTime);
+        ImGui::Text("Player Rotation: (%.*f, %.*f, %.*f)", 2, transform.rotation[0], 2,
+                    transform.rotation[1], 2, transform.rotation[2]);
 
-        nk_checkbox_label(ctx, "Wireframe", &wireframe);
+        ImGui::Text("FPS: %f", fps);
+        ImGui::Text("Frame Time: %f", frameTime);
+
+        ImGui::Checkbox("Wireframe", &wireframe);
         glPolygonMode(GL_FRONT_AND_BACK, wireframe ? GL_LINE : GL_FILL);
+        ImGui::End();
     }
-    nk_end(ctx);
 }
 
-SpriteRenderer::SpriteRenderer()
+SpriteRenderer::SpriteRenderer(unsigned width, unsigned height)
 {
-    glm::mat4 orthoMatrix{1.0f};
-    orthoMatrix = glm::ortho(0.0f, (float)WIDTH, 0.0f, (float)HEIGHT, -1.0f, 1.0f);
     m_guiShader.loadFromFile("GUIVertex.glsl", "GUIFragment.glsl");
     m_guiBorder.loadFromFile("GUIBorder.png", 1);
-
+    onWindowResize(width, height);
     m_guiShader.bind();
-    m_guiShader.set("orthographicMatrix", orthoMatrix);
     m_guiShader.set("guiTexture", 0);
     m_guiShader.set("borderTexture", 1);
 }
 
-void SpriteRenderer::render(const Texture2D& texture, float x, float y, float width, float height)
+void SpriteRenderer::onWindowResize(unsigned width, unsigned height)
+{
+    glm::mat4 orthoMatrix{1.0f};
+    orthoMatrix = glm::ortho(0.0f, (float)width, 0.0f, (float)height, -1.0f, 1.0f);
+    m_guiShader.bind();
+    m_guiShader.set("orthographicMatrix", orthoMatrix);
+}
+
+void SpriteRenderer::render(const Texture2D& texture, float x, float y, float width,
+                            float height)
 {
     // glEnable(GL_BLEND);
     texture.bind(0);

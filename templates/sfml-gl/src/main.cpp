@@ -15,7 +15,7 @@ int main()
     window.setFramerateLimit(60);
     guiInit(window);
 
-    Game game;
+    Game game(window.getSize().x, window.getSize().y);
 
     Keyboard keyboard;
     while (window.isOpen()) {
@@ -33,13 +33,20 @@ int main()
                     window.setMouseCursorVisible(!isMouseActive);
                 }
             }
+            else if (e.type == sf::Event::Closed) {
+                window.close();
+            }
+            else if (e.type == sf::Event::Resized) {
+                glViewport(0, 0, e.size.width, e.size.height);
+                game.onResize(e.size.width, e.size.height);
+            }
         }
 
         game.onInput(keyboard, window, isMouseActive);
         game.onUpdate();
 
         glEnable(GL_DEPTH_TEST);
-        game.onRender();
+        game.onRender(window);
         game.onGUI();
         guiEndFrame();
 
