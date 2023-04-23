@@ -17,17 +17,14 @@ Select the "Show All Files" options in Solution Explorer, and right-click on the
 
 Go into the project properies and under `C/C++ > General`, add the deps/ directory as an additional include directy.
 
-
-Finally, under `Linker > Input`, add OpenGL32.lib as an additional dependancy. 
+Finally, under `Linker > Input`, add OpenGL32.lib as an additional dependancy.
 
 ### Linux
 
-Requires conan w/ bincrafters and cmake.
+Requires conan:
 
 ```sh
-python3 -m pip install conan
-conan remote add bincrafters https://api.bintray.com/conan/bincrafters/public-conan
-conan remote update bincrafters https://api.bintray.com/conan/bincrafters/public-conan
+python3 -m pip install conan==1.57.0
 ```
 
 To build, at the root of the project:
@@ -50,5 +47,3 @@ To build and run in release mode, simply add the `release` suffix:
 sh scripts/build.sh release
 sh scripts/run.sh release
 ```
-
-[]: https://www.sfml-dev.org/download/sfml/2.5.1/
