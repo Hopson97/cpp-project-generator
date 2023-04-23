@@ -24,12 +24,12 @@ then
         rm -rf -d <PNAME> 
     fi
 
-    mkdir -p <PNAME> 
+    mkdir -p <PNAME>
+    mkdir -p <PNAME>/data
 fi
 
-# Creates the folder for the buildaries
-mkdir -p <PNAME>
-mkdir -p <PNAME>/Data
+# Creates the folder for the binaries
+
 mkdir -p build
 mkdir -p build/release
 mkdir -p build/debug
@@ -45,8 +45,9 @@ if [ "$1" = "release" ]
 then
     target_release
     cp build/release/bin/<PNAME>  <PNAME>/<PNAME> 
+    cp -R data <PNAME>/
 else
     target_debug
 fi
 
-cp -R data <PNAME>/
+
