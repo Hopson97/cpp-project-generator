@@ -1,8 +1,8 @@
 # C++ Project Generator
 
-This is primarily for personal use, though feel free to use it youself as well.
+This is primarily for personal use, though feel free to use it yourself as well.
 
-Often when creating new C++ projects, I would end up copy and pasting CMakeLists.txt files and build scripts, manually having to change project names and other mundane activies. To mitigate this issue, I created this project, which would create these project files for me.
+Often when creating new C++ projects, I would end up copy and pasting CMakeLists.txt files and build scripts, manually having to change project names and other mundane activities. To mitigate this issue, I created this project, which would create these project files for me.
 
 ## Building
 
@@ -12,7 +12,7 @@ On linux
 sh build.sh release
 ```
 
-## Configuartion
+## Configuration
 
 ### Setting up
 
@@ -134,4 +134,5 @@ To build and run in release mode, use the `release` argument:
 ./scripts/build.sh release
 ./scripts/run.sh release
 ```
+
 
